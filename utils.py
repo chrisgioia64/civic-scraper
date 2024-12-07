@@ -1,19 +1,31 @@
 import requests
 import os
 from records import Municipality, CommitteeData, CommitteeMeeting, CommitteeFile
+import csv
+import datetime
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 def download_files(municipality : Municipality):
-    print("Downloading files for " + str(municipality.city))
+    """
+    Downloads all files associated with this municipality
+    """
+    logging.info("Downloading files for " + str(municipality.city))
     for committee in municipality.committees:
-        print("Downloading files for committee " + str(committee.name))
+        logging.info("Downloading files for committee " + str(committee.name))
         for meeting in committee.meetings:
-            download_meeting(municipality, committee, meeting)
+            __download_meeting(municipality, committee, meeting)
 
-def download_meeting(municipality : Municipality, committee : CommitteeData, 
+def __download_meeting(municipality : Municipality, committee : CommitteeData, 
                  meeting : CommitteeMeeting):
+    """
+    Downloads the files associated with a committee meeting which may include 
+    agenda and minutes
+    """
     committee_name = committee.name.replace("/","_")
     dir = "download/" + municipality.county + "/" + municipality.city + "/" + committee_name + "/"
-    # print("meeting date " + str(meeting.date))
     s = dir + municipality.city + "_" + committee_name + "_" + meeting.date.strftime("%Y_%m_%d")
     
     os.makedirs(dir, exist_ok=True)
@@ -25,7 +37,9 @@ def download_meeting(municipality : Municipality, committee : CommitteeData,
         download_file(meeting.minutes.file_url, filename)
 
 def download_file(url, local_filename):
-    # Send a GET request to the URL
+    """
+    Downloads a file from a URL and saves it to the local file system
+    """
     with requests.get(url, stream=True) as response:
         try:
             response.raise_for_status()  # Check if the request was successful
@@ -34,21 +48,29 @@ def download_file(url, local_filename):
                     file.write(chunk)
     
         except requests.HTTPError as e:
-            print(f"Failed to download {url}: {e}")
-        # Write the content to a local file
+            logging.error(f"Failed to download {url}: {e}")
         
-    # print(f"Downloaded {url} to {local_filename}")
-
 def file_extension(url : str):
     local_filename = url.split('/')[-1]
     extension = local_filename.split('.')[-1]
     return extension
 
-if __name__ == "__main__":
-    url = 'https://www.antiochca.gov/fc/government/agendas/CityCouncil/2024/agendas/111224/111224a.pdf'
-    local_folder = 'download'
-    
-    # Ensure the local folder exists
-    os.makedirs(local_folder, exist_ok=True)
-    
-    download_file(url, local_folder)
+def write_to_csv(municipality : Municipality, filename):
+    """ Writes the data for a municipality to a csv file"""
+    logging.info("Writing csv for " + str(municipality.city))
+    data = municipality.getJsonData()
+    with open(filename, mode='w', newline='') as file:
+        writer = csv.DictWriter(file, fieldnames=data[0].keys())
+        writer.writeheader()
+        writer.writerows(data)
+
+def get_timestamp():
+    return datetime.datetime.now().strftime("%Y_%m_%d_%H_%M_%S")
+
+def is_date(text):
+    try:
+        datetime.datetime.strptime(text, "%m/%d/%y")
+        return True
+    except ValueError:
+        return False
+
