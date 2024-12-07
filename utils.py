@@ -5,18 +5,43 @@ import csv
 import datetime
 import logging
 
+import requests
+from concurrent.futures import ThreadPoolExecutor
+
 # Configure logging
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+
+def download_file(url, dest):
+    response = requests.get(url, stream=True)
+    with open(dest, 'wb') as f:
+        for chunk in response.iter_content(chunk_size=1024):
+            f.write(chunk)
+
+urls = [
+    ('https://example.com/file1', 'file1.txt'),
+    ('https://example.com/file2', 'file2.txt'),
+]
+
+with ThreadPoolExecutor(max_workers=4) as executor:
+    executor.map(lambda u: download_file(*u), urls)    
+
 
 def download_files(municipality : Municipality):
     """
     Downloads all files associated with this municipality
     """
     logging.info("Downloading files for " + str(municipality.city))
+    ls = []
     for committee in municipality.committees:
         logging.info("Downloading files for committee " + str(committee.name))
         for meeting in committee.meetings:
-            __download_meeting(municipality, committee, meeting)
+            # __download_meeting(municipality, committee, meeting)
+            ls.append((municipality, committee, meeting))
+    
+    with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust `max_workers` as needed
+        executor.map(lambda u: __download_meeting(*u), ls)
 
 def __download_meeting(municipality : Municipality, committee : CommitteeData, 
                  meeting : CommitteeMeeting):
