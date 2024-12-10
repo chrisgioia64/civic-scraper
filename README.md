@@ -17,25 +17,6 @@ Result:
 
 Note: a few links are broken and do not point to a valid asset [Issue 5](https://github.com/chrisgioia64/civic-scraper/issues/5).
 
-## How to add a scraper
-
-1. Create a new file with the name of the city (e.g. ClaytonScraper).
-2. Follow the template in `example_scraper.py` to create a class.
-  * The class should inherit from `CivicScraper`
-  * Initialize with the correct municipality and url
-  * Implement the `scrape` method where your final result updates the `municipality` instance variable
-3. In `scraper.py`, add the new scraper to the `scrapers` list variable.
-
-Now, when you run `python scraper.py`, the new scraper will be included.
-
-## Entity Model
-
-The entity model is written up in `records.py`. Here are the four categories which form a containment hierarchy.
-* `Municipality` : the city (e.g. Walnut Creek)
-* `CommitteeData`: the committee (e.g. Arts Commission)
-* `CommitteeMeeting` : a specific meeting from a committee from a particular date that contains an agenda and/or minutes (e.g. Arts Commission Regular Meeting on Jul 22, 2024)
-* `CommitteeFile` : An agenda or minutes for a specific file. contains the file name and url. (e.g. Minutes for Arts Commission Regular Meeting on JUl 22, 2024)
-
 ## Supported Cities
 
 ### [Antioch](https://www.antiochca.gov/government/agendas-and-minutes/)
@@ -56,6 +37,26 @@ Currently does not run to completion but is mostly working.
 Time taken:
 * (TODO: update this value)
 * (TODO: update this value)
+
+## How to add a scraper
+
+1. Create a new file with the name of the city (e.g. ClaytonScraper).
+2. Follow the template in `example_scraper.py` to create a class.
+  * The class should inherit from `CivicScraper`
+  * Initialize with the correct municipality and url
+  * Implement the `scrape` method where your final result updates the `municipality` instance variable
+3. In `scraper.py`, add the new scraper to the `scrapers` list variable.
+
+Now, when you run `python scraper.py`, the new scraper will be included.
+
+## Entity Model
+
+The entity model is written up in `records.py`. Here are the four categories which form a containment hierarchy.
+* `Municipality` : the city (e.g. Walnut Creek)
+* `CommitteeData`: the committee (e.g. Arts Commission)
+* `CommitteeMeeting` : a specific meeting from a committee from a particular date that contains an agenda and/or minutes (e.g. Arts Commission Regular Meeting on Jul 22, 2024)
+* `CommitteeFile` : An agenda or minutes for a specific file. contains the file name and url. (e.g. Minutes for Arts Commission Regular Meeting on JUl 22, 2024)
+
 
 ## Improvements
 
