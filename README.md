@@ -28,6 +28,14 @@ Note: a few links are broken and do not point to a valid asset [Issue 5](https:/
 
 Now, when you run `python scraper.py`, the new scraper will be included.
 
+## Entity Model
+
+The entity model is written up in `records.py`. Here are the four categories which form a containment hierarchy.
+* `Municipality` : the city (e.g. Walnut Creek)
+* `CommitteeData`: the committee (e.g. Arts Commission)
+* `CommitteeMeeting` : a specific meeting from a committee from a particular date that contains an agenda and/or minutes (e.g. Arts Commission Regular Meeting on Jul 22, 2024)
+* `CommitteeFile` : An agenda or minutes for a specific file. contains the file name and url. (e.g. Minutes for Arts Commission Regular Meeting on JUl 22, 2024)
+
 ## Supported Cities
 
 ### [Antioch](https://www.antiochca.gov/government/agendas-and-minutes/)

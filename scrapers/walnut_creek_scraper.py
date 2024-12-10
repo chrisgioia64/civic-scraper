@@ -68,8 +68,6 @@ class WalnutCreekScraper(CivicScraper):
             try:
                 link_element = tds[3].find_element(By.TAG_NAME, "a")
                 committee_meeting = CommitteeMeeting(parsed_date)
-                # logger.info("Found link: " + link_element.get_attribute("href"))
-                # logger.info("Found link text: " + link_element.text)
                 file = CommitteeFile(link_element.text, link_element.get_attribute("href"))
                 if "agenda" in link_element.text.lower():
                     committee_meeting.addAgenda(file)
