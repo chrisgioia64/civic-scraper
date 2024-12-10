@@ -31,7 +31,7 @@ Time taken:
 
 
 Stats:
-* Files: 1930 files
+* Files: 2948 files
 * Scraping time: 10 minutes
 * Downloading time: 13 minutes
 
@@ -41,7 +41,7 @@ Stats:
 * [Issue 8](https://github.com/chrisgioia64/civic-scraper/issues/8) : Stale Exception when clicking the year tab. Some of the years are skipped.
 
 Stats:
-* Files: 2948 files
+* Files: 1930 files
 * Scraping time: 2.5 minutes
 * Downloading time: 6 minutes
 
