@@ -9,7 +9,7 @@ from selenium.webdriver.remote.webelement import WebElement
 from selenium.common.exceptions import NoSuchElementException
 import time
 from datetime import datetime, date, timedelta
-
+from selenium.common.exceptions import WebDriverException
 
 def get_date(date_text):
     date_text = date_text.strip()
@@ -45,13 +45,12 @@ class WalnutCreekScraper(CivicScraper):
             try:
                 tab.click()
                 logger.info("   Clicking on " + str(tab.text))
-            except Exception as e:
+            except WebDriverException as e:
                 logger.error("   Clicking on tab for committee " + str(committee.name) + " failed ")
                 logger.error("   Tab text: " + str(e))
             time.sleep(1)
             TabbedPanelsContentVisible = committee_element.find_element(By.CLASS_NAME, "TabbedPanelsContentVisible")
             self.__scrape_committee_year_table(committee, TabbedPanelsContentVisible, committee_name)
-
         
     def __scrape_committee_year_table(self, committee : CommitteeData, content_element : WebElement, committee_name : str):
         table = content_element.find_element(By.TAG_NAME, "table")

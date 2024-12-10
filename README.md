@@ -29,14 +29,21 @@ Time taken:
 * 6 minutes to scrape (TODO: update this value)
 * 15 minutes to download files (TODO: update this value)
 
+
+Stats:
+* Files: 1930 files
+* Scraping time: 10 minutes
+* Downloading time: 6 minutes
+
+
 ### [Walnut Creek](https://www.walnutcreekca.gov/government/public-meeting-agendas-and-videos)
 
-Currently does not run to completion but is mostly working. 
-* [Issue 8](https://github.com/chrisgioia64/civic-scraper/issues/8) : Stale Exception when clicking the year tab. Prevents scraper from finishing.
+* [Issue 8](https://github.com/chrisgioia64/civic-scraper/issues/8) : Stale Exception when clicking the year tab. Some of the years are skipped.
 
-Time taken:
-* (TODO: update this value)
-* (TODO: update this value)
+Stats:
+* Files: 2948 files
+* Scraping time: 10 minutes
+* Downloading time: 13 minutes
 
 ## How to add a scraper
 
