@@ -69,19 +69,20 @@ class CommitteeData:
                 logger.info("   Minutes: " + meeting.minutes.file_name + " URL: " + meeting.minutes.file_url)
             print("")
 
-class CommitteeMeeting:
-    def __init__(self, date):
-        self.date = date
-        self.agenda = None
-        self.minutes = None
-
-    def addAgenda(self, agenda):
-        self.agenda = agenda
-    
-    def addMinutes(self, minutes):
-        self.minutes = minutes
 
 class CommitteeFile:
     def __init__(self, file_name, file_url):
         self.file_name = file_name
         self.file_url = file_url
+
+class CommitteeMeeting:
+    def __init__(self, date):
+        self.date = date
+        self.agenda : CommitteeFile = None
+        self.minutes : CommitteeFile = None
+
+    def addAgenda(self, agenda : CommitteeFile):
+        self.agenda = agenda
+    
+    def addMinutes(self, minutes : CommitteeFile):
+        self.minutes = minutes

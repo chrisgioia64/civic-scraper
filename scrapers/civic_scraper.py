@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from records import Municipality
+from scrapers.records import Municipality
 import scrapers.webdriver
 
 class CivicScraper(ABC):

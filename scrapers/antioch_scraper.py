@@ -1,6 +1,6 @@
 import time
 from datetime import datetime, date, timedelta
-from records import Municipality, CommitteeData, CommitteeMeeting, CommitteeFile
+from scrapers.records import Municipality, CommitteeData, CommitteeMeeting, CommitteeFile
 import logging
 
 from scrapers.civic_scraper import CivicScraper

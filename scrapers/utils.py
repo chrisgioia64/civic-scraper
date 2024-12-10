@@ -1,6 +1,6 @@
 import requests
 import os
-from records import Municipality, CommitteeData, CommitteeMeeting, CommitteeFile
+from scrapers.records import Municipality, CommitteeData, CommitteeMeeting, CommitteeFile
 import csv
 import datetime
 import logging
@@ -8,9 +8,7 @@ import logging
 import requests
 from concurrent.futures import ThreadPoolExecutor
 
-# Configure logging
-logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-
+from scrapers.civic_logger import logger
 
 
 def download_file(url, dest):
@@ -24,8 +22,8 @@ urls = [
     ('https://example.com/file2', 'file2.txt'),
 ]
 
-with ThreadPoolExecutor(max_workers=4) as executor:
-    executor.map(lambda u: download_file(*u), urls)    
+# with ThreadPoolExecutor(max_workers=4) as executor:
+#     executor.map(lambda u: download_file(*u), urls)    
 
 
 def download_files(municipality : Municipality):
@@ -39,7 +37,7 @@ def download_files(municipality : Municipality):
         for meeting in committee.meetings:
             # __download_meeting(municipality, committee, meeting)
             ls.append((municipality, committee, meeting))
-    
+
     with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust `max_workers` as needed
         executor.map(lambda u: __download_meeting(*u), ls)
 
@@ -55,30 +53,43 @@ def __download_meeting(municipality : Municipality, committee : CommitteeData,
     
     os.makedirs(dir, exist_ok=True)
     if meeting.agenda is not None:
-        filename = s + "_agenda." + file_extension(meeting.agenda.file_url)
+        filename = s + "_agenda."
         download_file(meeting.agenda.file_url, filename)
     if meeting.minutes is not None:
-        filename = s + "_minutes." + file_extension(meeting.minutes.file_url)
+        filename = s + "_minutes."
         download_file(meeting.minutes.file_url, filename)
 
 def download_file(url, local_filename):
     """
     Downloads a file from a URL and saves it to the local file system
     """
-    with requests.get(url, stream=True) as response:
+    with requests.get(url) as response:
         try:
             response.raise_for_status()  # Check if the request was successful
-            with open(local_filename, 'wb') as file:
-                for chunk in response.iter_content(chunk_size=8192):
-                    file.write(chunk)
-    
+
+            content_type = response.headers.get('Content-Type')
+
+            if "html" in content_type:
+                logger.info("html content " + str(local_filename))
+                with open(local_filename + ".html", 'w', encoding='utf-8') as f:
+                    f.write(response.text)
+            elif "pdf" in content_type:
+                logger.info("pdf content " + str(local_filename))
+                with open(local_filename + ".pdf", 'wb') as file:
+                    for chunk in response.iter_content(chunk_size=8192):
+                        file.write(chunk)
+            else:
+                logger.info("unrecognized content type " + str(content_type))
+
         except requests.HTTPError as e:
+            print(f"Failed to download {url}: {e}")
             logging.error(f"Failed to download {url}: {e}")
         
 def file_extension(url : str):
-    local_filename = url.split('/')[-1]
-    extension = local_filename.split('.')[-1]
-    return extension
+    if ".pdf" in url:
+        return "pdf"
+    else:
+        return "html"
 
 def write_to_csv(municipality : Municipality, filename):
     """ Writes the data for a municipality to a csv file"""
