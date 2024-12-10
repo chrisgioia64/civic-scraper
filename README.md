@@ -33,7 +33,7 @@ Time taken:
 Stats:
 * Files: 1930 files
 * Scraping time: 10 minutes
-* Downloading time: 6 minutes
+* Downloading time: 13 minutes
 
 
 ### [Walnut Creek](https://www.walnutcreekca.gov/government/public-meeting-agendas-and-videos)
@@ -42,8 +42,8 @@ Stats:
 
 Stats:
 * Files: 2948 files
-* Scraping time: 10 minutes
-* Downloading time: 13 minutes
+* Scraping time: 2.5 minutes
+* Downloading time: 6 minutes
 
 ## How to add a scraper
 
