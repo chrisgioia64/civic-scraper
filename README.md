@@ -25,11 +25,6 @@ Note: a few links are broken and do not point to a valid asset [Issue 5](https:/
 * [Issue 2](https://github.com/chrisgioia64/civic-scraper/issues/3) : For `Zoning Administrator` committee, years 2019 - 2010 not getting picked up by Selenium (the rows are there but the text is empty).
 * [Issue 3](https://github.com/chrisgioia64/civic-scraper/issues/1): under the committee: "Processing Quality of Life Forum", there are multiple agendas on the same date. They appear as separate entities in the csv file. However, when they download these resources, they are given the same name and only one of them is saved.
 
-Time taken:
-* 6 minutes to scrape (TODO: update this value)
-* 15 minutes to download files (TODO: update this value)
-
-
 Stats:
 * Files: 2948 files
 * Scraping time: 10 minutes
