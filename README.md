@@ -21,24 +21,23 @@ Note: a few links are broken and do not point to a valid asset [Issue 5](https:/
 
 ### [Antioch](https://www.antiochca.gov/government/agendas-and-minutes/)
 
+2948 files / 10 minute scrape time / 13 minute download time
+
 * [Issue 1](https://github.com/chrisgioia64/civic-scraper/issues/3) : For `City Council`, years 2002 - 2004 are not getting picked up by Selenium (the rows are there but the text is empty) 
 * [Issue 2](https://github.com/chrisgioia64/civic-scraper/issues/3) : For `Zoning Administrator` committee, years 2019 - 2010 not getting picked up by Selenium (the rows are there but the text is empty).
 * [Issue 3](https://github.com/chrisgioia64/civic-scraper/issues/1): under the committee: "Processing Quality of Life Forum", there are multiple agendas on the same date. They appear as separate entities in the csv file. However, when they download these resources, they are given the same name and only one of them is saved.
 
-Stats:
-* Files: 2948 files
-* Scraping time: 10 minutes
-* Downloading time: 13 minutes
-
 
 ### [Walnut Creek](https://www.walnutcreekca.gov/government/public-meeting-agendas-and-videos)
 
+1930 files / 2.5 minute scrape time / 6 minute download time
+
 * [Issue 8](https://github.com/chrisgioia64/civic-scraper/issues/8) : Stale Exception when clicking the year tab. Some of the years are skipped.
 
-Stats:
-* Files: 1930 files
-* Scraping time: 2.5 minutes
-* Downloading time: 6 minutes
+### [Brentwood](https://www.brentwoodca.gov/government/meeting-information)
+
+200 files / 6 minute scrape time / 45 second download time
+
 
 ## How to add a scraper
 

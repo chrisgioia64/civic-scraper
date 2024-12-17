@@ -53,11 +53,18 @@ def __download_meeting(municipality : Municipality, committee : CommitteeData,
     
     os.makedirs(dir, exist_ok=True)
     if meeting.agenda is not None:
-        filename = s + "_agenda."
+        filename = s + "_agenda"
         download_file(meeting.agenda.file_url, filename)
     if meeting.minutes is not None:
-        filename = s + "_minutes."
+        filename = s + "_minutes"
         download_file(meeting.minutes.file_url, filename)
+
+def get_content_type(url):
+    """
+    Returns the content type of the URL
+    """
+    response = requests.head(url)
+    return response.headers.get('content-type')
 
 def download_file(url, local_filename):
     """
